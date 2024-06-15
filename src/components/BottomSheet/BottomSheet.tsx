@@ -12,7 +12,6 @@ import Animated, {
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window')
 
-type bottomSheetProps ={}
 
 
 const BottomSheet =( () => {
@@ -26,7 +25,6 @@ const BottomSheet =( () => {
         'worklet';
         translateY.value = withSpring(destination, { damping: 50 });
     }, []);
-    // useImperativeHandle(ref , ()=> ({scrollTo}), [scrollTo])
 
     const context = useSharedValue({ y: 0 });
 

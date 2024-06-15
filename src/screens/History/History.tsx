@@ -2,7 +2,6 @@ import React, {useCallback, useRef} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, SafeAreaView, SectionList} from 'react-native';
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {StatusBar} from "expo-status-bar";
-import BottomSheet from "../../components/BottomSheet/BottomSheet.tsx";
 import {Image} from "@rneui/themed";
 // @ts-ignore
 import avatar1 from '../../assets/avatar1.jpg';
@@ -10,6 +9,7 @@ import avatar1 from '../../assets/avatar1.jpg';
 import avatar2 from "../../assets/avatar2.png";
 // @ts-ignore
 import avatar3 from "../../assets/avatar3.png";
+import HistoryBottomSheet, {HistoryBottomSheetRefProps} from './HistoryBottomSheet.tsx';
 
 
 
@@ -58,29 +58,8 @@ const DATA = [
                 designation: "HR Manager",
                 workTime: "8:00 am - 5:00 pm",
                 image: avatar3
-            },
-            {
-                id: 7,
-                name: "John John",
-                designation: "IT Manager",
-                workTime: "8:00 am - 5:00 pm",
-                image: avatar2
-            },
-            {
-                id: 8,
-                name: "Stephnie Almond",
-                designation: "HR Manager",
-                workTime: "8:00 am - 5:00 pm",
-                image: avatar3
-            },
+            }
 
-            {
-                id: 2,
-                name: "John John",
-                designation: "IT Manager",
-                workTime: "8:00 am - 5:00 pm",
-                image: avatar2
-            },
         ]
     }
 ];
@@ -89,10 +68,16 @@ const DATA = [
 
 
 const HistoryScreen =()=> {
-    const ref = useRef(null)
-    // const onPress = useCallback<BottomSheetRefProps>(()=> {
-    //     ref?.current?.scrollTo(-100)
-    // },[])
+    const ref = useRef<HistoryBottomSheetRefProps>(null);
+
+    const onPress = useCallback(() => {
+      const isActive = ref?.current?.isActive();
+      if (isActive) {
+        ref?.current?.scrollTo(0);
+      } else {
+        ref?.current?.scrollTo(-200);
+      }
+    }, []);
     return (
 
         <SafeAreaView style={styles.safeareaContainer}>
@@ -101,7 +86,7 @@ const HistoryScreen =()=> {
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={onPress}>
                         <View style={styles.item}>
                             <Image source={item.image} style={styles.avatar} />
                             <View style={styles.textContainer}>
@@ -119,8 +104,8 @@ const HistoryScreen =()=> {
         <GestureHandlerRootView style={{flex:1}}>
             <View style={styles.container}>
                 <StatusBar style="light" />
-                <BottomSheet />
             </View>
+             <HistoryBottomSheet ref={ref}/>
         </GestureHandlerRootView>
         </SafeAreaView>
 

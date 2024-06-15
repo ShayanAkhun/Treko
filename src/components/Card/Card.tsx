@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {
     StyleSheet,
     Text,
@@ -18,9 +18,6 @@ import { Image } from '@rneui/themed';
 
 
 
-const onPress = useCallback(()=> {
-
-},[])
 
 const DATA = [
     {
@@ -100,7 +97,7 @@ const Card = () => (
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-                <TouchableOpacity onPress={onPress}>
+                <TouchableOpacity>
                 <View style={styles.item}>
                     <Image source={item.image} style={styles.avatar} />
                     <View style={styles.textContainer}>
