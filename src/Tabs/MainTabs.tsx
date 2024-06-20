@@ -4,7 +4,7 @@ import { Icon } from '../components';
 import {HistoryStack} from '../stacks/HistoryStack';
 import { LocationStack } from '../stacks/LocationStack';
 import { MenuStack } from '../stacks/MenuStack';
-import { MessagesStack } from '../stacks/MessagesStack';
+import { ChatStack } from '../stacks/ChatStack.tsx';
 import { SettingStack } from '../stacks/SettingStack';
 import { View,StyleSheet } from 'react-native';
 import {IconLibrary} from "../components/Icons/IconsLibarary.tsx";
@@ -35,7 +35,7 @@ export const MainTabs: React.FC = () => {
                 ) : (
                     <IconLibrary.Octicons name="apps" size={24} color="#ffff"/>
                 ),
-                Messages: focused ? (
+                Chat: focused ? (
                     <IconLibrary.MaterialIcons name="chat-bubble-outline" size={24} color="#ffff" />
                 ) : (
                     <IconLibrary.MaterialIcons name="chat-bubble-outline" size={24} color="#ffff" />
@@ -55,7 +55,6 @@ export const MainTabs: React.FC = () => {
         tabBarAllowFontScaling: true,
         tabBarLabelPosition: 'below-icon',
         tabBarBadgeStyle: { position: 'absolute' },
-        // tabBarActiveBackgroundColor: '#09648c',
         tabBarBackground: () => <View  style={{backgroundColor: '#09648c', flex:1,borderTopLeftRadius:20,borderTopRightRadius:20}} />,
         tabBarStyle: styles.tabBarStyle,
     }),
@@ -85,7 +84,7 @@ const tabBar = useMemo<React.ComponentProps<typeof Tabs.Navigator>['tabBar']>(()
                 component={MenuStack}
                 options={{ headerShown: false, title: '' }}
             />
-            <Tabs.Screen name="Messages" component={MessagesStack} options={{ headerShown: false, title: '' }} />
+            <Tabs.Screen name="Chat" component={ChatStack} options={{ headerShown: false, title: '' }} />
             <Tabs.Screen
                 name="Settings"
                 component={SettingStack}

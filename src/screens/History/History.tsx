@@ -9,7 +9,7 @@ import avatar1 from '../../assets/avatar1.jpg';
 import avatar2 from "../../assets/avatar2.png";
 // @ts-ignore
 import avatar3 from "../../assets/avatar3.png";
-import HistoryBottomSheet, {HistoryBottomSheetRefProps} from './HistoryBottomSheet.tsx';
+// import HistoryBottomSheet, {HistoryBottomSheetRefProps} from './HistoryBottomSheet.tsx';
 
 
 
@@ -68,16 +68,16 @@ const DATA = [
 
 
 const HistoryScreen =()=> {
-    const ref = useRef<HistoryBottomSheetRefProps>(null);
+    // const ref = useRef<HistoryBottomSheetRefProps>(null);
 
-    const onPress = useCallback(() => {
-      const isActive = ref?.current?.isActive();
-      if (isActive) {
-        ref?.current?.scrollTo(0);
-      } else {
-        ref?.current?.scrollTo(-200);
-      }
-    }, []);
+    // const onPress = useCallback(() => {
+    //   const isActive = ref?.current?.isActive();
+    //   if (isActive) {
+    //     ref?.current?.scrollTo(0);
+    //   } else {
+    //     ref?.current?.scrollTo(-200);
+    //   }
+    // }, []);
     return (
 
         <SafeAreaView style={styles.safeareaContainer}>
@@ -86,7 +86,7 @@ const HistoryScreen =()=> {
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <TouchableOpacity onPress={onPress}>
+                    <TouchableOpacity >
                         <View style={styles.item}>
                             <Image source={item.image} style={styles.avatar} />
                             <View style={styles.textContainer}>
@@ -101,12 +101,12 @@ const HistoryScreen =()=> {
                     <></>
                 )}
             />
-        <GestureHandlerRootView style={{flex:1}}>
+        {/* <GestureHandlerRootView style={{flex:1}}>
             <View style={styles.container}>
                 <StatusBar style="light" />
             </View>
-             <HistoryBottomSheet ref={ref}/>
-        </GestureHandlerRootView>
+             
+        </GestureHandlerRootView> */}
         </SafeAreaView>
 
     )
@@ -114,7 +114,6 @@ const HistoryScreen =()=> {
 const styles = StyleSheet.create({
     safeareaContainer: {
         flex: 1,
-        // paddingTop: StatusBar.currentHeight,
         marginHorizontal: 16,
     },
     container: {

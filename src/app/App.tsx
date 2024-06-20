@@ -16,7 +16,6 @@ import { Input } from '@rneui/themed';
 import {IconLibrary} from "../components/Icons/IconsLibarary.tsx";
 // @ts-ignore
 import MainLogo from "../assets/mainLogo.png"
-import {HistoryStack} from "../stacks/HistoryStack.tsx";
 import {MainTabs} from "../Tabs/MainTabs.tsx";
 
 const RootStack = createNativeStackNavigator();
@@ -42,7 +41,7 @@ function HomeScreen({ navigation }) {
               leftIcon={ <IconLibrary.Octicons name="lock" size={24} color="#333434" />}
           />
         </View>
-        <TouchableOpacity style={styles.LoginButton} onPress={() => navigation.navigate('Details')}>
+        <TouchableOpacity style={styles.LoginButton} onPress={() => navigation.navigate('MainTabs')}>
           <Text style={styles.loginText}>Log In</Text>
         </TouchableOpacity>
         <TouchableOpacity>
@@ -62,7 +61,7 @@ function App(): React.JSX.Element {
         <NavigationContainer>
           <RootStack.Navigator initialRouteName="Home" screenOptions={{headerShown:false}}>
             <RootStack.Screen name="Home" component={HomeScreen}   />
-            <RootStack.Screen name="Details" component={MainTabs} />
+            <RootStack.Screen name="MainTabs" component={MainTabs} />
           </RootStack.Navigator>
         </NavigationContainer>
       </ThemeProvider>
