@@ -4,7 +4,7 @@ import MapView, {PROVIDER_GOOGLE} from "react-native-maps";
 import GetLocation from 'react-native-get-location'
 
 
-const [premissionGranted, setpremissionGranted] = useState(false)
+// const [premissionGranted, setpremissionGranted] = useState(false)
 
 const Map =()=> {
     return (

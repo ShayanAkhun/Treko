@@ -11,13 +11,13 @@ const LocationScreen = () => {
 
     return (
         <>
-            {/* <GestureHandlerRootView style={{flex:1}}> */}
-                {/* <View style={styles.container}> */}
-                    {/* <Map/> */}
-                 {/* <StatusBar style="light" /> */}
-                 {/* <BottomSheet/> */}
-                {/* </View> */}
-            {/* </GestureHandlerRootView> */}
+             <GestureHandlerRootView style={{flex:1}}>
+                 <View style={styles.container}>
+                     <Map/>
+                  <StatusBar style="light" />
+                  {/* <BottomSheet/> */}
+                 </View>
+             </GestureHandlerRootView>
             <Text>Map</Text>
         </>
     );

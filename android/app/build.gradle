@@ -73,6 +73,13 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
+    
+     tasks.whenTaskAdded { task ->
+        if (task.name == 'generateDebugLintReportModel') {
+            task.dependsOn 'copyReactNativeVectorIconFonts'
+        }
+    }
+     lintOptions { checkReleaseBuilds false }
 
     namespace "com.tracker"
     defaultConfig {
