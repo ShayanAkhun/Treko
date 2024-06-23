@@ -11,7 +11,6 @@ import ChatScreen from '../screens/Chat/Chat.tsx';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '../config/firebase.js';
 
-
 const RootStack = createNativeStackNavigator();
 interface AuthenticatedUserContextType {
   user: User | null;
@@ -33,8 +32,9 @@ const AuthenticatedUserProvider = ({ children }: { children: ReactNode }) => {
 function ChatStack() {
   return (
 
-    <RootStack.Navigator initialRouteName="Chat">
-    <RootStack.Screen name="Chat" component={ChatScreen} />
+    <RootStack.Navigator initialRouteName="History" screenOptions={{headerShown:false}} >
+    <RootStack.Screen name='MainTabs' component={MainTabs}/>
+    {/* <RootStack.Screen name="Chat" component={ChatScreen} /> */}
   </RootStack.Navigator>
   )
 }
@@ -83,6 +83,11 @@ function App(): React.JSX.Element {
   return (
     <ThemeProvider>
       <AuthenticatedUserProvider>
+          {/* <RootStack.Navigator initialRouteName="Chat" screenOptions={{headerShown:false}}>
+
+        <RootStack.Screen name="Login" component={Login} />
+        <RootStack.Screen name='MainTabs' component={MainTabs}/> */}
+          {/* </RootStack.Navigator> */}
         <RootNavigator />
       </AuthenticatedUserProvider>
     </ThemeProvider>
