@@ -1,8 +1,8 @@
-import React, {useCallback, useRef} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, SafeAreaView, SectionList} from 'react-native';
-import {GestureHandlerRootView} from "react-native-gesture-handler";
-import {StatusBar} from "expo-status-bar";
-import {Image} from "@rneui/themed";
+import React, { useCallback, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, SectionList } from 'react-native';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
+import { Image } from "@rneui/themed";
 // @ts-ignore
 import avatar1 from '../../assets/avatar1.jpg';
 // @ts-ignore
@@ -38,7 +38,7 @@ const DATA = [
                 designation: "HR Manager",
                 workTime: "8:00 am - 5:00 pm",
                 image: avatar3
-            },  {
+            }, {
                 id: 4,
                 name: "Clair John",
                 designation: "Project Manager",
@@ -67,7 +67,7 @@ const DATA = [
 
 
 
-const HistoryScreen =()=> {
+const HistoryScreen = () => {
     // const ref = useRef<HistoryBottomSheetRefProps>(null);
 
     // const onPress = useCallback(() => {
@@ -101,7 +101,7 @@ const HistoryScreen =()=> {
                     <></>
                 )}
             />
-        {/* <GestureHandlerRootView style={{flex:1}}>
+            {/* <GestureHandlerRootView style={{flex:1}}>
             <View style={styles.container}>
                 <StatusBar style="light" />
             </View>
@@ -114,27 +114,30 @@ const HistoryScreen =()=> {
 const styles = StyleSheet.create({
     safeareaContainer: {
         flex: 1,
-        marginHorizontal: 16,
+        backgroundColor: "#FFFFFF",
+        width: "100%",
     },
     container: {
-        flex:1,
-        alignItems:'center',
+        flex: 1,
+        alignItems: 'center',
         justifyContent: 'center'
     },
     touchable: {
-        top:500,
-            justifyContent:'center'
+        top: 500,
+        justifyContent: 'center'
     },
     text: {
         textAlign: 'center',
         alignItems: 'center',
-        color:'black'
+        color: 'black'
     }, item: {
         flexDirection: 'row',
         padding: 20,
         marginVertical: 8,
         backgroundColor: '#E5E5E540',
         borderRadius: 8,
+        marginLeft:18,
+        marginRight:18
     },
     avatar: {
         width: 50,

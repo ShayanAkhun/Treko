@@ -56,7 +56,7 @@ export const MainTabs: React.FC = () => {
         tabBarLabelPosition: 'below-icon',
         tabBarBadgeStyle: { position: 'absolute' },
         tabBarBackground: () => <View  style={{backgroundColor: '#09648c', flex:1,borderTopLeftRadius:20,borderTopRightRadius:20}} />,
-        tabBarStyle: (route.name === 'Chat') ? { display: 'none' } : styles.tabBarStyle,
+        tabBarStyle: (route.name === 'Chat') ? { display: 'none' } : styles.tabBarStyle,zIndex: 2 
     }),
     [],
 );
@@ -98,8 +98,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#09648c',
     },
     tabBarStyle: {
-        // position: 'absolute',
         height: 60,
-            borderRadius:20,
+        borderRadius: 20,
+        position: 'absolute',
+        bottom: 0,
     },
 });

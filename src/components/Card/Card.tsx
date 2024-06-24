@@ -15,7 +15,7 @@ import avatar2 from "../../assets/avatar2.png";
 // @ts-ignore
 import avatar3 from "../../assets/avatar3.png";
 import { Image } from '@rneui/themed';
-
+import  {SheetManager} from 'react-native-actions-sheet';
 
 
 
@@ -89,15 +89,21 @@ const DATA = [
         ]
     }
 ];
+// @ts-ignore
+const Card = ({navigation }) => {
+    // @ts-ignore
+    const handlePress = (item) => {
+        SheetManager.show("CardSheet");
+    };
+    return (
 
-const Card = () => (
-    <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container}>
         <SectionList
             sections={DATA}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handlePress(item)}>
                 <View style={styles.item}>
                     <Image source={item.image} style={styles.avatar} />
                     <View style={styles.textContainer}>
@@ -109,11 +115,12 @@ const Card = () => (
                 </TouchableOpacity>
             )}
             renderSectionHeader={({ section: { title } }) => (
-             <></>
+                <></>
             )}
-        />
+            />
     </SafeAreaView>
-);
+        )
+    };
 
 const styles = StyleSheet.create({
     container: {

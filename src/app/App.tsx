@@ -1,24 +1,23 @@
-import React, { createContext, useContext, useEffect, useState,ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { View, Alert, ActivityIndicator } from 'react-native';
 import { ThemeProvider } from '@rneui/themed';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// @ts-ignore
-import { MainTabs } from '../Tabs/MainTabs.tsx';
-import SignUp from '../screens/SignUp/signUp.tsx';
-import Login from '../screens/Login/Login.tsx';
-import ChatScreen from '../screens/Chat/Chat.tsx';
+import { MainTabs } from '../Tabs/MainTabs';
+import SignUp from '../screens/SignUp/signUp';
+import Login from '../screens/Login/Login';
+import { SheetProvider } from 'react-native-actions-sheet';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '../config/firebase.js';
+import { auth } from '../config/firebase';
 
 const RootStack = createNativeStackNavigator();
+
 interface AuthenticatedUserContextType {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 const AuthenticatedUserContext = createContext<AuthenticatedUserContextType | undefined>(undefined);
-
 
 const AuthenticatedUserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -31,22 +30,19 @@ const AuthenticatedUserProvider = ({ children }: { children: ReactNode }) => {
 
 function ChatStack() {
   return (
-
-    <RootStack.Navigator initialRouteName="History" screenOptions={{headerShown:false}} >
-    <RootStack.Screen name='MainTabs' component={MainTabs}/>
-    {/* <RootStack.Screen name="Chat" component={ChatScreen} /> */}
-  </RootStack.Navigator>
-  )
+    <RootStack.Navigator initialRouteName="History" screenOptions={{ headerShown: false }}>
+      <RootStack.Screen name="MainTabs" component={MainTabs} />
+    </RootStack.Navigator>
+  );
 }
 
 function AuthStack() {
   return (
-
     <RootStack.Navigator screenOptions={{ headerShown: false }}>
-    <RootStack.Screen name="Login" component={Login} />
-    <RootStack.Screen name="SignUp" component={SignUp} />
-  </RootStack.Navigator>
-  )
+      <RootStack.Screen name="Login" component={Login} />
+      <RootStack.Screen name="SignUp" component={SignUp} />
+    </RootStack.Navigator>
+  );
 }
 
 function RootNavigator() {
@@ -64,7 +60,7 @@ function RootNavigator() {
     });
     return unsubscribeAuth;
   }, [setUser]);
-  
+
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -81,16 +77,13 @@ function RootNavigator() {
 
 function App(): React.JSX.Element {
   return (
-    <ThemeProvider>
-      <AuthenticatedUserProvider>
-          {/* <RootStack.Navigator initialRouteName="Chat" screenOptions={{headerShown:false}}>
-
-        <RootStack.Screen name="Login" component={Login} />
-        <RootStack.Screen name='MainTabs' component={MainTabs}/> */}
-          {/* </RootStack.Navigator> */}
-        <RootNavigator />
-      </AuthenticatedUserProvider>
-    </ThemeProvider>
+    <SheetProvider>
+      <ThemeProvider>
+        <AuthenticatedUserProvider>
+          <RootNavigator />
+        </AuthenticatedUserProvider>
+      </ThemeProvider>
+    </SheetProvider>
   );
 }
 
