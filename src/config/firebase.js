@@ -7,13 +7,12 @@ import {API_KEY,AUTH_DOMAIN,PROJECT_ID,STORAGE_BUCKET,MESSAGING_SENDER_ID,APP_ID
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBYZ03LnQSOXMLJHCHlk7vjJfxdKcQU2gs",
-  authDomain:"treko-1f5b6.firebaseapp.com" ,
-  projectId: "treko-1f5b6",
-  storageBucket: "treko-1f5b6.appspot.com",
-  messagingSenderId: "363856634142",
-  appId: "1:363856634142:web:8cc8f95c0f1869cdbfe90f",
-  measurementId: "G-QHXK7Q7ZXJ"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase

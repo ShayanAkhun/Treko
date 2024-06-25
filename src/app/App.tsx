@@ -9,6 +9,7 @@ import Login from '../screens/Login/Login';
 import { SheetProvider } from 'react-native-actions-sheet';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import Menu from '../screens/Menu/Menu';
 
 const RootStack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ function ChatStack() {
   return (
     <RootStack.Navigator initialRouteName="History" screenOptions={{ headerShown: false }}>
       <RootStack.Screen name="MainTabs" component={MainTabs} />
+      <RootStack.Screen name="Menu" component={Menu} />
     </RootStack.Navigator>
   );
 }
