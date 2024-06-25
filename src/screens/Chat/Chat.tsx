@@ -34,15 +34,7 @@ const ChatScreen: React.FC = () => {
     signOut(auth).catch(error => console.log('Error logging out: ', error));
   };
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity style={styles.headerButton} onPress={onSignOut}>
-          <IconLibrary.Octicons name="sign-out" size={24} color={colors.gray} style={styles.headerIcon} />
-        </TouchableOpacity>
-      )
-    });
-  }, [navigation]);
+
 
   useLayoutEffect(() => {
     const collectionRef = collection(database, 'chats');

@@ -1,19 +1,66 @@
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React, { useCallback, useMemo } from 'react';
-import { Icon } from '../components';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {HistoryStack} from '../stacks/HistoryStack';
 import { LocationStack } from '../stacks/LocationStack';
 import { MenuStack } from '../stacks/MenuStack';
 import { ChatStack } from '../stacks/ChatStack.tsx';
 import { SettingStack } from '../stacks/SettingStack';
-import { View,StyleSheet } from 'react-native';
+import { View,StyleSheet, ActivityIndicator, Alert, Platform } from 'react-native';
 import {IconLibrary} from "../components/Icons/IconsLibarary.tsx";
+import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
+import Geolocation from '@react-native-community/geolocation';
+import { addDoc, collection } from 'firebase/firestore';
+import { database } from '../config/firebase.js';
 
 
 
 const Tabs = createBottomTabNavigator();
 
 export const MainTabs: React.FC = () => {
+    const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    // useEffect(() => {
+    //     const requestLocationPermission = async () => {
+    //       const result = await request(
+    //         Platform.OS === 'android' ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+    //       );
+    
+    //       if (result === RESULTS.GRANTED) {
+    //         Geolocation.getCurrentPosition(
+    //           position => {
+    //             const { latitude, longitude } = position.coords;
+    //             setLocation({ latitude, longitude });
+    //             setIsLoading(false);
+    //             saveLocationToFirestore(latitude, longitude);
+    //           },
+    //           error => {
+    //             setErrorMsg(error.message);
+    //             setIsLoading(false);
+    //           },
+    //           { enableHighAccuracy: true, maximumAge: 10000 },
+    //         );
+    //       } else {
+    //         setErrorMsg('Location permission denied');
+    //         setIsLoading(false);
+    //       }
+    //     };
+    
+    //     requestLocationPermission();
+    //   }, []);
+      const saveLocationToFirestore = async (latitude: number, longitude: number) => {
+        try {
+          await addDoc(collection(database, 'locations'), {
+            latitude,
+            longitude,
+            timestamp: new Date(),
+          });
+        } catch (error) {
+          console.error('Error adding document: ', error);
+        }
+      };
+
     const screenOptions = useCallback<
     NonNullable<Exclude<React.ComponentProps<typeof Tabs.Navigator>['screenOptions'], BottomTabNavigationOptions>>
 >(
@@ -56,7 +103,7 @@ export const MainTabs: React.FC = () => {
         tabBarLabelPosition: 'below-icon',
         tabBarBadgeStyle: { position: 'absolute' },
         tabBarBackground: () => <View  style={{backgroundColor: '#09648c', flex:1,borderTopLeftRadius:20,borderTopRightRadius:20}} />,
-        tabBarStyle: (route.name === 'Chat') ? { display: 'none' } : styles.tabBarStyle,zIndex: 2 
+        tabBarStyle: (route.name === 'Chat' || route.name === 'userSetting') ? { display: 'none' } : styles.tabBarStyle,zIndex: 2 
     }),
     [],
 );
@@ -67,7 +114,17 @@ const tabBar = useMemo<React.ComponentProps<typeof Tabs.Navigator>['tabBar']>(()
         () => ({}),
         [],
     );
-
+    if (isLoading) {
+        return (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size="large" />
+          </View>
+        );
+      }
+    
+      if (errorMsg) {
+        Alert.alert('Error', errorMsg);
+      }
     return (
         <Tabs.Navigator screenOptions={screenOptions} sceneContainerStyle={sceneContainerStyle} tabBar={tabBar}>
             <Tabs.Screen
@@ -104,3 +161,7 @@ const styles = StyleSheet.create({
         bottom: 0,
     },
 });
+
+function saveLocationToFirestore(latitude: number, longitude: number) {
+    throw new Error('Function not implemented.');
+}
