@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 export const ChatStack = () => {
   return (
     <Stack.Navigator 
-    screenOptions={{headerTitleAlign: 'center',contentStyle: { paddingTop: 20 },headerTitleStyle: {fontSize:18,color: '#09648C'}, }}>
+    screenOptions={{headerTitleAlign: 'center',headerTitleStyle: {fontSize:18,color: '#09648C'}, }}>
       <Stack.Screen name="Chat" component={ChatScreen} />
     </Stack.Navigator>
   );

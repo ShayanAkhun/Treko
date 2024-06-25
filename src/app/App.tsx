@@ -31,9 +31,8 @@ const AuthenticatedUserProvider = ({ children }: { children: ReactNode }) => {
 
 function ChatStack() {
   return (
-    <RootStack.Navigator initialRouteName="History" screenOptions={{ headerShown: false }}>
+    <RootStack.Navigator initialRouteName="MainTabs" screenOptions={{ headerShown: false }}>
       <RootStack.Screen name="MainTabs" component={MainTabs} />
-      <RootStack.Screen name="Menu" component={Menu} />
     </RootStack.Navigator>
   );
 }

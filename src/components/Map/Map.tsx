@@ -13,10 +13,10 @@ const Map =()=> {
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
                 region={{
-                    latitude: 35.8026,
-                    longitude:74.9832,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
+                    latitude: 40.7128,
+                    longitude:-74.0060,
+                    latitudeDelta: 0.5,
+                    longitudeDelta: 0.5,
                 }}
             />
         </View>

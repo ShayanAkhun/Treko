@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, Switch, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text,  StyleSheet,  } from 'react-native';
 import { Avatar } from '@rneui/base';
 import { ListItem } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
@@ -23,13 +23,13 @@ export const profileSetting: React.FC<IProps> = () => {
       onPress: () => {
         navigation.navigate('userSetting');
       },
-      iconName: 'medkit',
+     
     },
 
     {
       title: 'Log out',
       onPress: () => onSignOut(),
-      iconName: 'ios-log-out-outline',
+     
     },
   ];
 
