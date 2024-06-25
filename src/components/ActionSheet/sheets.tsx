@@ -14,7 +14,7 @@ declare module 'react-native-actions-sheet' {
     }>;
     'CardSheet': SheetDefinition<{
       payload: {
-        item: { name: string };
+        Item: { name: string };
       };
     }>;
   }
