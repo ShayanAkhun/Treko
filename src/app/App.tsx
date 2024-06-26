@@ -24,6 +24,8 @@ import {auth} from '../config/firebase';
 import Map from '../components/Map/Map';
 import Card from '../components/Card/Card';
 import CardSheet from '../components/ActionSheet/CardSheet';
+import {API_BASE_URL} from '@env';
+console.log(API_BASE_URL); // Outputs: https://api.example.com
 
 const RootStack = createNativeStackNavigator();
 
@@ -46,7 +48,8 @@ const AuthenticatedUserProvider = ({children}: {children: ReactNode}) => {
   );
 };
 
-function ChatStack() {
+function ChatStack({user}) {
+  console.log(user.email, 'user');
   return (
     <RootStack.Navigator
       initialRouteName="MainTabs"
@@ -84,7 +87,7 @@ function RootNavigator() {
       setIsLoading(false);
     });
     return unsubscribeAuth;
-  }, [setUser]);
+  }, []);
 
   if (isLoading) {
     return (
@@ -96,7 +99,7 @@ function RootNavigator() {
 
   return (
     <NavigationContainer>
-      {user ? <ChatStack /> : <AuthStack />}
+      {user ? <ChatStack user={user} /> : <AuthStack />}
     </NavigationContainer>
   );
 }
