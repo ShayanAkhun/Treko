@@ -17,9 +17,9 @@ import { database } from '../config/firebase.js';
 const Tabs = createBottomTabNavigator();
 
 export const MainTabs: React.FC = () => {
-    const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
-    const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+    // const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
+    // const [errorMsg, setErrorMsg] = useState<string | null>(null);
+    // const [isLoading, setIsLoading] = useState(true);
 
     // useEffect(() => {
     //     const requestLocationPermission = async () => {
@@ -49,17 +49,17 @@ export const MainTabs: React.FC = () => {
     
     //     requestLocationPermission();
     //   }, []);
-      const saveLocationToFirestore = async (latitude: number, longitude: number) => {
-        try {
-          await addDoc(collection(database, 'locations'), {
-            latitude,
-            longitude,
-            timestamp: new Date(),
-          });
-        } catch (error) {
-          console.error('Error adding document: ', error);
-        }
-      };
+    //   const saveLocationToFirestore = async (latitude: number, longitude: number) => {
+    //     try {
+    //       await addDoc(collection(database, 'locations'), {
+    //         latitude,
+    //         longitude,
+    //         timestamp: new Date(),
+    //       });
+    //     } catch (error) {
+    //       console.error('Error adding document: ', error);
+    //     }
+    //   };
 
     const screenOptions = useCallback<
     NonNullable<Exclude<React.ComponentProps<typeof Tabs.Navigator>['screenOptions'], BottomTabNavigationOptions>>
@@ -114,19 +114,19 @@ const tabBar = useMemo<React.ComponentProps<typeof Tabs.Navigator>['tabBar']>(()
         () => ({}),
         [],
     );
-    if (isLoading) {
-        return (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size="large" />
-          </View>
-        );
-      }
+    // if (isLoading) {
+    //     return (
+    //       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    //         <ActivityIndicator size="large" />
+    //       </View>
+    //     );
+    //   }
     
-      if (errorMsg) {
-        Alert.alert('Error', errorMsg);
-      }
+    //   if (errorMsg) {
+    //     Alert.alert('Error', errorMsg);
+    //   }
     return (
-        <Tabs.Navigator screenOptions={screenOptions} sceneContainerStyle={sceneContainerStyle} tabBar={tabBar}>
+        <Tabs.Navigator initialRouteName="Menu" screenOptions={screenOptions} sceneContainerStyle={sceneContainerStyle} tabBar={tabBar}>
             <Tabs.Screen
                 name="History"
                 component={HistoryStack}
@@ -162,6 +162,6 @@ const styles = StyleSheet.create({
     },
 });
 
-function saveLocationToFirestore(latitude: number, longitude: number) {
-    throw new Error('Function not implemented.');
-}
+// function saveLocationToFirestore(latitude: number, longitude: number) {
+//     throw new Error('Function not implemented.');
+// }

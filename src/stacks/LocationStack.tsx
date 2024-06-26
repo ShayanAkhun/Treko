@@ -8,7 +8,7 @@ export const LocationStack = () => {
   return (
     <Stack.Navigator initialRouteName="Find">
       <Stack.Screen
-        name="LocationScreen"
+        name="Location"
         component={LocationScreen}
         options={{
           headerShown: false,
