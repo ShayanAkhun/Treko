@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, {useEffect, useState} from 'react';
+=======
+import React, { useRef } from 'react';
+>>>>>>> 75aca2629e048067f9b3c80b058a4e8bb856503a
 import {
   View,
   Text,
@@ -7,6 +11,7 @@ import {
   SafeAreaView,
   SectionList,
   Dimensions,
+<<<<<<< HEAD
   Modal,
   Alert,
   Platform,
@@ -14,16 +19,28 @@ import {
 } from 'react-native';
 import {Image, Icon} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
+=======
+} from 'react-native';
+import { Image } from '@rneui/themed';
+>>>>>>> 75aca2629e048067f9b3c80b058a4e8bb856503a
 // @ts-ignore
 import avatar1 from '../../assets/avatar1.jpg';
 // @ts-ignore
 import avatar2 from '../../assets/avatar2.png';
 // @ts-ignore
 import avatar3 from '../../assets/avatar3.png';
+<<<<<<< HEAD
 import Geolocation from '@react-native-community/geolocation';
 import {addDoc, collection} from 'firebase/firestore';
 import {database} from '../../config/firebase';
 
+=======
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import ActionSheet, {
+  SheetManager,
+  ActionSheetRef,
+} from 'react-native-actions-sheet';
+>>>>>>> 75aca2629e048067f9b3c80b058a4e8bb856503a
 const windowHeight = Dimensions.get('window').height;
 
 const DATA = [
@@ -107,6 +124,7 @@ const requestLocationPermission = async () => {
 };
 
 const History = () => {
+<<<<<<< HEAD
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [location, setLocation] = useState<{
@@ -117,6 +135,15 @@ const History = () => {
   const onCardPress = () => {
     setModalVisible(true);
   };
+=======
+  const actionSheetRef = useRef<ActionSheetRef>(null);
+
+  const onCardPress =()=> {
+    if (actionSheetRef.current) {
+      actionSheetRef.current.show();
+    }
+  }
+>>>>>>> 75aca2629e048067f9b3c80b058a4e8bb856503a
 
   const closeModal = () => {
     setModalVisible(false);
@@ -174,6 +201,7 @@ const History = () => {
     }
   };
   return (
+<<<<<<< HEAD
     <SafeAreaView style={styles.safeareaContainer}>
       <SectionList
         sections={DATA}
@@ -187,9 +215,47 @@ const History = () => {
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.designation}>{item.designation}</Text>
                 <Text style={styles.workTime}>{item.workTime}</Text>
+=======
+    <GestureHandlerRootView style={{flex: 1}}>
+
+      <SafeAreaView style={styles.safeareaContainer}>
+        <SectionList
+          sections={DATA}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={()=> onCardPress()}>
+              <View style={styles.item}>
+                <Image source={item.image} style={styles.avatar} />
+                <View style={styles.textContainer}>
+                  <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.designation}>{item.designation}</Text>
+                  <Text style={styles.workTime}>{item.workTime}</Text>
+                </View>
+>>>>>>> 75aca2629e048067f9b3c80b058a4e8bb856503a
               </View>
-            </View>
+            </TouchableOpacity>
+          )}
+          renderSectionHeader={({ section: { title } }) => <></>}
+        />
+      </SafeAreaView>
+      <ActionSheet
+        ref={actionSheetRef}
+        id="CardSheet"
+        defaultOverlayOpacity={0}
+        overlayColor="transparent"
+        containerStyle={{
+          ...styles.actionSheetContainer,
+          height: windowHeight * 0.33,
+        }}
+        >
+       <View style={styles.actionSheetContent}>
+          <Text style={styles.actionSheetText}>Test text</Text>
+          <Text style={styles.actionSheetSubText}>Test text 1</Text>
+          <TouchableOpacity style={styles.actionButton} onPress={() => {}}>
+            <Text style={styles.buttonText}>Button 1</Text>
           </TouchableOpacity>
+<<<<<<< HEAD
         )}
         renderSectionHeader={({section: {title}}) => <></>}
       />
@@ -226,6 +292,14 @@ const History = () => {
         </View>
       </Modal>
     </SafeAreaView>
+=======
+          <TouchableOpacity style={styles.actionButton} onPress={() => {}}>
+            <Text style={styles.buttonText}>Button 2</Text>
+          </TouchableOpacity>
+        </View>
+      </ActionSheet>
+    </GestureHandlerRootView>
+>>>>>>> 75aca2629e048067f9b3c80b058a4e8bb856503a
   );
 };
 
@@ -264,6 +338,46 @@ const styles = StyleSheet.create({
   workTime: {
     fontSize: 12,
     color: '#999',
+  }
+  ,
+  actionSheetContainer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  actionSheetContent: {
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  actionSheetText: {
+    fontSize: 28,
+    textAlign: 'center',
+    color: 'black',
+  }
+  ,
+
+  actionSheetSubText: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: 'black',
+    marginBottom: 20,
+  },
+  actionButton: {
+    backgroundColor: '#2196F3',
+    padding: 10,
+    borderRadius: 8,
+    marginVertical: 10,
+    width: '80%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
   },
   modalContainer: {
     flex: 1,

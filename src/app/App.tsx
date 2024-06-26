@@ -17,7 +17,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {MainTabs} from '../Tabs/MainTabs';
 import SignUp from '../screens/SignUp/signUp';
 import Login from '../screens/Login/Login';
-import {SheetProvider} from 'react-native-actions-sheet';
+import ActionSheet, {SheetProvider} from 'react-native-actions-sheet';
 import '../components/ActionSheet/sheets';
 import {onAuthStateChanged, User} from 'firebase/auth';
 import {auth} from '../config/firebase';

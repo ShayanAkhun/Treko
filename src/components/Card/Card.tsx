@@ -94,7 +94,7 @@ const DATA = [
 const Card = () => {
   // @ts-ignore
   const handlePress = item => {
-    SheetManager.show('CardSheet', {payload: {Item: item, Navigation}});
+    SheetManager.show('CardSheet', {payload:  { value: "Hello World" }});
   };
   return (
     <GestureHandlerRootView style={{flex: 1}}>

@@ -41,6 +41,7 @@ const Map = ({route}) => {
       } else {
         setCurrentLocation({...location, address: 'Address not found'});
       }
+<<<<<<< HEAD
     } catch (error) {
       console.error('Error fetching address:', error);
       setCurrentLocation({...location, address: 'Error fetching address'});
@@ -51,6 +52,10 @@ const Map = ({route}) => {
 
   if (!currentLocation) return <Text>Loading....</Text>;
 
+=======
+    }, []),
+  );
+>>>>>>> 75aca2629e048067f9b3c80b058a4e8bb856503a
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <View style={styles.container}>
