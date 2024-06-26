@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,12 +9,12 @@ import {
   PermissionsAndroid,
   Alert,
 } from 'react-native';
-import {IconLibrary} from '../../components/Icons/IconsLibarary';
-import {Divider, ListItem} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
 import {addDoc, collection} from 'firebase/firestore';
 import {database} from '../../config/firebase';
+import {IconLibrary} from '../../components/Icons/IconsLibarary';
+import {Divider, ListItem} from '@rneui/themed';
 
 const requestLocationPermission = async () => {
   if (Platform.OS === 'android') {
@@ -36,7 +36,7 @@ const requestLocationPermission = async () => {
       return false;
     }
   }
-  return true;
+  return true; // For iOS or other platforms where permission is not required
 };
 
 const Menu = () => {
@@ -46,7 +46,6 @@ const Menu = () => {
     longitude: number;
   } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [permissionGranted, setPermissionGranted] = useState(false);
 
   const saveLocationToFirestore = async (
     latitude: number,
@@ -63,12 +62,10 @@ const Menu = () => {
     }
   };
 
-  useEffect(() => {
-    const requestPermission = async () => {
-      const granted = await requestLocationPermission();
-      if (granted) {
-        console.log('Location permission granted');
-        setPermissionGranted(true);
+  const fetchCurrentLocation = async () => {
+    try {
+      const permissionGranted = await requestLocationPermission();
+      if (permissionGranted) {
         Geolocation.getCurrentPosition(
           position => {
             const {latitude, longitude} = position.coords;
@@ -84,10 +81,15 @@ const Menu = () => {
         console.warn('Location permission not granted');
         setErrorMsg('Location permission not granted');
       }
-    };
+    } catch (error) {
+      console.error('Error requesting location permission: ', error);
+      setErrorMsg('Error requesting location permission');
+    }
+  };
 
-    requestPermission();
-  }, []);
+  useEffect(() => {
+    fetchCurrentLocation();
+  }, []); // Fetch location on initial render
 
   useEffect(() => {
     navigation.setOptions({title: 'Menu'}); // Set the header title here
