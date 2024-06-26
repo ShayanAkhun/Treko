@@ -5,7 +5,7 @@ import Card from '../../components/Card/Card'
 const EmployeeList = ({navigation}) => {
   return (
     <SafeAreaView>
-      <Card navigation={navigation.navigate("Card")}/>
+      
     </SafeAreaView>
   )
 }

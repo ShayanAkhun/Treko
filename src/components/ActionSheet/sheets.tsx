@@ -1,4 +1,4 @@
-import {registerSheet, SheetDefinition} from 'react-native-actions-sheet';
+import {registerSheet, SheetDefinition, SheetManager} from 'react-native-actions-sheet';
 import MainActionSheet from './MainActionSheet';
 import CardSheet from './CardSheet';
 
@@ -7,20 +7,22 @@ registerSheet('CardSheet', CardSheet);
 
 declare module 'react-native-actions-sheet' {
   interface Sheets {
-    MainActionSheet: SheetDefinition<{
+    "MainActionSheet": SheetDefinition<{
       payload: {
-        value: string;
-        navigation: any;
+        value: React.ReactNode;
       };
     }>;
-    CardSheet: SheetDefinition<{
+    "CardSheet": SheetDefinition<{
       sheetId: string;
       payload: {
-        Item: {name: string};
-        Navigation: any;
+        value: string;
       };
     }>;
   }
 }
+
+SheetManager.show("CardSheet", {
+  payload: { value: "Hello World" },
+});
 
 export {};

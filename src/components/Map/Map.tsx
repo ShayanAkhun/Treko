@@ -20,7 +20,6 @@ const Map = ({route}) => {
       }
     }, []),
   );
-
   return (
     <GestureHandlerRootView>
       <View style={styles.container}>

@@ -12,7 +12,10 @@ import {
   MEASUREMENT_ID,
 } from '@env';
 
-const firebaseConfig = {};
+const firebaseConfig = {
+
+  
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
