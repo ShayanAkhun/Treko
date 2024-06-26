@@ -1,17 +1,52 @@
-import React from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Platform, PermissionsAndroid } from 'react-native';
 import { IconLibrary } from '../../components/Icons/IconsLibarary';
 import { Divider } from '@rneui/themed';
 import { ListItem } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
+
+const requestLocationPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Access Permission',
+            message: 'This app needs access to your location so we can know where you are.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          }
+        );
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        console.warn(err);
+        return false;
+      }
+    }
+    return true; // For iOS, assume permission is granted
+  };
 const Menu = () => {
     const navigation = useNavigation();
+    useEffect(() => {
+        const requestPermission = async () => {
+          const granted = await requestLocationPermission();
+          if (granted) {
+            console.log('Location permission granted');
+          } else {
+            console.warn('Location permission not granted');
+          }
+        };
+    
+        requestPermission();
+      }, []);
+    
     return (
         <SafeAreaView style={{ backgroundColor: "#FFFFFF", flex: 1 }}>
             <View style={styles.viewContainer}>
                 <View style={styles.container}>
-                    <TouchableOpacity style={styles.touchable} onPress={() => { navigation.navigate("Chat") }}>
+                    <TouchableOpacity style={styles.touchable} onPress={() => { navigation.navigate("HistoryScreen") }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <IconLibrary.MaterialIcons name="chat-bubble-outline" size={24} color="#444444" />
                             <Text style={{ color: "#444444", fontSize: 24, marginLeft: 14 }}>Chat</Text>
@@ -20,7 +55,7 @@ const Menu = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.locationContainer}>
-                    <TouchableOpacity style={styles.locationTouchable} onPress={() => { navigation.navigate("Location") }}>
+                    <TouchableOpacity style={styles.locationTouchable} onPress={() => { navigation.navigate("list") }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <IconLibrary.Octicons name="location" size={24} color="#444444" />
                             <Text style={{ color: "#444444", fontSize: 24, marginLeft: 14 }}>Location</Text>

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { View, Alert, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, PermissionsAndroid, Platform } from 'react-native';
 import { ThemeProvider } from '@rneui/themed';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,7 +9,6 @@ import Login from '../screens/Login/Login';
 import { SheetProvider } from 'react-native-actions-sheet';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '../config/firebase';
-import Menu from '../screens/Menu/Menu';
 
 const RootStack = createNativeStackNavigator();
 
@@ -22,6 +21,7 @@ const AuthenticatedUserContext = createContext<AuthenticatedUserContextType | un
 
 const AuthenticatedUserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+
   return (
     <AuthenticatedUserContext.Provider value={{ user, setUser }}>
       {children}
@@ -46,6 +46,7 @@ function AuthStack() {
   );
 }
 
+
 function RootNavigator() {
   const context = useContext(AuthenticatedUserContext);
   if (!context) {
@@ -55,12 +56,14 @@ function RootNavigator() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribeAuth = onAuthStateChanged(auth, (authenticatedUser) => {
+    const unsubscribeAuth = onAuthStateChanged(auth, authenticatedUser => {
       setUser(authenticatedUser ? authenticatedUser : null);
       setIsLoading(false);
     });
     return unsubscribeAuth;
   }, [setUser]);
+
+
 
   if (isLoading) {
     return (
@@ -69,6 +72,7 @@ function RootNavigator() {
       </View>
     );
   }
+
   return (
     <NavigationContainer>
       {user ? <ChatStack /> : <AuthStack />}
