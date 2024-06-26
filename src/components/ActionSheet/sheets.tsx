@@ -1,20 +1,23 @@
-import { registerSheet, SheetDefinition } from 'react-native-actions-sheet';
+import {registerSheet, SheetDefinition} from 'react-native-actions-sheet';
 import MainActionSheet from './MainActionSheet';
 import CardSheet from './CardSheet';
 
-registerSheet("MainActionSheet", MainActionSheet);
-registerSheet("CardSheet", CardSheet);
+registerSheet('MainActionSheet', MainActionSheet);
+registerSheet('CardSheet', CardSheet);
 
 declare module 'react-native-actions-sheet' {
   interface Sheets {
-    'MainActionSheet': SheetDefinition<{
+    MainActionSheet: SheetDefinition<{
       payload: {
         value: string;
+        navigation: any;
       };
     }>;
-    'CardSheet': SheetDefinition<{
+    CardSheet: SheetDefinition<{
+      sheetId: string;
       payload: {
-        Item: { name: string };
+        Item: {name: string};
+        Navigation: any;
       };
     }>;
   }
