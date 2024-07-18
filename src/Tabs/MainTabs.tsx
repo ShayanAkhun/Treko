@@ -18,8 +18,7 @@ import {
 import {IconLibrary} from '../components/Icons/IconsLibarary.tsx';
 import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
-import {addDoc, collection} from 'firebase/firestore';
-import {database} from '../config/firebase.js';
+
 
 const Tabs = createBottomTabNavigator();
 

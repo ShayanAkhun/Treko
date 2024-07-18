@@ -1,77 +1,38 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useState, useEffect} from 'react';
+import React, { useState, } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
   Modal,
   TextInput,
-  ActivityIndicator,
 } from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {Icon} from '@rneui/themed';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Icon } from '@rneui/themed';
 
-const windowHeight = Dimensions.get('window').height;
 
-const Map = ({route}) => {
-  const {location} = route?.params;
+const Map = () => {
   const [modalVisible, setModalVisible] = useState(true);
-  const [currentLocation, setCurrentLocation] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (location) {
-      fetchAddress(location.latitude, location.longitude);
-    }
-  }, [location]);
 
-  const fetchAddress = async (latitude, longitude) => {
-    try {
-      setLoading(true);
-      // Replace with your reverse geocoding API call
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBxOtziYbuxRGtN3yQ7fZfLeyqC30pm7Qo`,
-      );
-      const data = await response.json();
-      if (data.results.length > 0) {
-        const address = data.results[0].formatted_address;
-        setCurrentLocation({...location, address});
-      } else {
-        setCurrentLocation({...location, address: 'Address not found'});
-      }
-<<<<<<< HEAD
-    } catch (error) {
-      console.error('Error fetching address:', error);
-      setCurrentLocation({...location, address: 'Error fetching address'});
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  if (!currentLocation) return <Text>Loading....</Text>;
 
-=======
-    }, []),
-  );
->>>>>>> 75aca2629e048067f9b3c80b058a4e8bb856503a
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.container}>
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           region={{
-            latitude: currentLocation.latitude,
-            longitude: currentLocation.longitude,
+            latitude: 40.7484,
+            longitude: 73.9857,
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }}>
           <Marker
             coordinate={{
-              latitude: currentLocation.latitude,
-              longitude: currentLocation.longitude,
+              latitude: 40.7484,
+              longitude: 73.9857,
             }}
             title="Your Location"
           />
@@ -95,13 +56,11 @@ const Map = ({route}) => {
             <Text style={styles.title}>Clair John is nearby</Text>
             <View style={styles.addressContainer}>
               <Icon name="location-pin" type="entypo" color="#000" />
-              {loading ? (
-                <ActivityIndicator size="small" color="#999" />
-              ) : (
-                <Text style={styles.addressText}>
-                  {currentLocation.address || 'Fetching address...'}
-                </Text>
-              )}
+
+              <Text style={styles.addressText}>
+                Jason is currently in New York
+              </Text>
+
             </View>
           </View>
         </View>

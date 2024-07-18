@@ -7,102 +7,37 @@ import {
   StyleSheet,
   Platform,
   PermissionsAndroid,
-  Alert,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import Geolocation from '@react-native-community/geolocation';
-import {addDoc, collection} from 'firebase/firestore';
-import {database} from '../../config/firebase';
 import {IconLibrary} from '../../components/Icons/IconsLibarary';
 import {Divider, ListItem} from '@rneui/themed';
 
-const requestLocationPermission = async () => {
-  if (Platform.OS === 'android') {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'Location Access Permission',
-          message:
-            'This app needs access to your location so we can know where you are.',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
-      return granted === PermissionsAndroid.RESULTS.GRANTED;
-    } catch (err) {
-      console.warn(err);
-      return false;
-    }
-  }
-  return true; // For iOS or other platforms where permission is not required
-};
 
-const Menu = () => {
-  const navigation = useNavigation();
-  const [location, setLocation] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const saveLocationToFirestore = async (
-    latitude: number,
-    longitude: number,
-  ) => {
-    try {
-      await addDoc(collection(database, 'locations'), {
-        latitude,
-        longitude,
-        timestamp: new Date(),
-      });
-    } catch (error) {
-      console.error('Error adding document: ', error);
-    }
-  };
-
-  const fetchCurrentLocation = async () => {
-    try {
-      const permissionGranted = await requestLocationPermission();
-      if (permissionGranted) {
-        Geolocation.getCurrentPosition(
-          position => {
-            const {latitude, longitude} = position.coords;
-            setLocation({latitude, longitude});
-            saveLocationToFirestore(latitude, longitude);
-          },
-          error => {
-            setErrorMsg(error.message);
-          },
-          {enableHighAccuracy: true, maximumAge: 10000},
-        );
-      } else {
-        console.warn('Location permission not granted');
-        setErrorMsg('Location permission not granted');
+const Menu = ({navigation}) => {
+  useEffect(()=> {
+    const requestLocationPermission = async () => {
+      if (Platform.OS === 'android') {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location Access Permission',
+              message:
+                'This app needs access to your location so we can know where you are.',
+              buttonNeutral: 'Ask Me Later',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
+            },
+          );
+          return granted === PermissionsAndroid.RESULTS.GRANTED;
+        } catch (err) {
+          console.warn(err);
+          return false;
+        }
       }
-    } catch (error) {
-      console.error('Error requesting location permission: ', error);
-      setErrorMsg('Error requesting location permission');
-    }
-  };
-
-  useEffect(() => {
-    fetchCurrentLocation();
-  }, []); // Fetch location on initial render
-
-  useEffect(() => {
-    navigation.setOptions({title: 'Menu'}); // Set the header title here
-  }, [navigation]);
-
-  const handleNavigateToMap = () => {
-    if (location) {
-      navigation.navigate('Map', {location});
-    } else {
-      Alert.alert('Error', 'Location is not available.');
-    }
-  };
-
+      return true; 
+    };
+  },[])
   return (
     <SafeAreaView style={{backgroundColor: '#FFFFFF', flex: 1}}>
       <View style={styles.viewContainer}>
@@ -128,7 +63,7 @@ const Menu = () => {
         <View style={styles.locationContainer}>
           <TouchableOpacity
             style={styles.locationTouchable}
-            onPress={handleNavigateToMap}>
+            onPress={()=> navigation.navigate("Location")}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <IconLibrary.Octicons name="location" size={24} color="#444444" />
               <Text style={{color: '#444444', fontSize: 24, marginLeft: 14}}>
@@ -168,11 +103,6 @@ const Menu = () => {
             </TouchableOpacity>
           </View>
         </View>
-        {errorMsg && (
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>{errorMsg}</Text>
-          </View>
-        )}
       </View>
     </SafeAreaView>
   );
@@ -225,14 +155,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   userTouchable: {
-    width: '100%', // Ensure touchable area is within the container
+    width: '100%',
   },
-  errorContainer: {
-    marginVertical: 20,
-    alignItems: 'center',
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 16,
-  },
+
 });

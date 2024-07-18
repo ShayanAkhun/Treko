@@ -12,30 +12,13 @@ import {Input} from '@rneui/themed';
 import {IconLibrary} from '../../components/Icons/IconsLibarary';
 // @ts-ignore
 import MainLogo from '../../assets/mainLogo.png';
-import {createUserWithEmailAndPassword} from 'firebase/auth';
-import {auth} from '../../config/firebase';
 
 const SignUp = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const onHandleSignUp = () => {
-    if (email === '' || password === '') {
-      Alert.alert('Error', 'Please enter both email and password');
-      return;
-    }
-    setLoading(true);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setLoading(false);
-        console.log('Signup successful');
-      })
-      .catch(err => {
-        setLoading(false);
-        Alert.alert('Error', err.message);
-      });
-  };
+ 
 
   return (
     <View style={styles.view}>
@@ -86,7 +69,7 @@ const SignUp = ({navigation}) => {
       {loading ? (
         <ActivityIndicator size="large" color="#09648c" />
       ) : (
-        <TouchableOpacity style={styles.LoginButton} onPress={onHandleSignUp}>
+        <TouchableOpacity style={styles.LoginButton} onPress={()=> navigation.navigate("Login")}>
           <Text style={styles.loginText}>Sign Up</Text>
         </TouchableOpacity>
       )}

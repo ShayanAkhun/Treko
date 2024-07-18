@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -7,41 +7,16 @@ import {
   View,
   Alert,
 } from 'react-native';
-import {ThemeProvider} from '@rneui/themed';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Image} from '@rneui/themed';
-import {Input} from '@rneui/themed';
-import {IconLibrary} from '../../components/Icons/IconsLibarary.tsx';
+import { Image } from '@rneui/themed';
+import { Input } from '@rneui/themed';
+import { IconLibrary } from '../../components/Icons/IconsLibarary.tsx';
 // @ts-ignore
 import MainLogo from '../../assets/mainLogo.png';
-import {MainTabs} from '../../Tabs/MainTabs.tsx';
-import {onAuthStateChanged, signInWithEmailAndPassword} from 'firebase/auth';
-import {auth} from '../../config/firebase.js';
 
-const RootStack = createNativeStackNavigator();
-
-const Login = ({navigation}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
-  const onHandleLogin = () => {
-    if (email === '' || password === '') {
-      Alert.alert('Error', 'Please enter both email and password');
-      return;
-    }
-    setLoading(true);
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setLoading(false);
-        console.log('Login Successful');
-      })
-      .catch(err => {
-        setLoading(false);
-        Alert.alert('Login Error', err.message);
-      });
-  };
+
 
   return (
     <View style={styles.view}>
@@ -50,7 +25,7 @@ const Login = ({navigation}) => {
         style={styles.image}
         PlaceholderContent={<ActivityIndicator />}
       />
-      <View style={{display: 'flex', justifyContent: 'center'}}>
+      <View style={{ display: 'flex', justifyContent: 'center' }}>
         <Text
           style={{
             textAlign: 'center',
@@ -58,7 +33,8 @@ const Login = ({navigation}) => {
             fontWeight: '400',
             fontSize: 18,
             color: '#9098B1',
-          }}>
+          }}
+        >
           Log in to continue
         </Text>
         <Input
@@ -66,9 +42,8 @@ const Login = ({navigation}) => {
           placeholderTextColor="#9098B1"
           keyboardType="email-address"
           textContentType="emailAddress"
-          value={email}
+          value={''}
           autoCapitalize="none"
-          onChangeText={text => setEmail(text)}
           inputContainerStyle={styles.inputContainer}
           leftIcon={
             <IconLibrary.Octicons name="mail" size={24} color="#333434" />
@@ -81,8 +56,7 @@ const Login = ({navigation}) => {
           secureTextEntry={true}
           textContentType="password"
           autoCorrect={false}
-          value={password}
-          onChangeText={text => setPassword(text)}
+          value={''}
           leftIcon={
             <IconLibrary.Octicons name="lock" size={24} color="#333434" />
           }
@@ -91,17 +65,17 @@ const Login = ({navigation}) => {
       {loading ? (
         <ActivityIndicator size="large" color="#09648c" />
       ) : (
-        <TouchableOpacity style={styles.LoginButton} onPress={onHandleLogin}>
+        <TouchableOpacity style={styles.LoginButton} onPress={()=>  navigation.navigate('MainTabs')}>
           <Text style={styles.loginText}>Log In</Text>
         </TouchableOpacity>
       )}
-      <View style={styles.sigupView}>
+      <View style={styles.signupView}>
         <Text style={styles.signup}>Don't have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.signin}>Sign Up</Text>
         </TouchableOpacity>
       </View>
-      <View style={{marginTop: 10}}>
+      <View style={{ marginTop: 10 }}>
         <TouchableOpacity onPress={() => navigation.navigate('MainTabs')}>
           <Text style={styles.forgotText}>Forgot Password?</Text>
         </TouchableOpacity>
@@ -135,7 +109,11 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     marginTop: 30,
   },
-  loginText: {textAlign: 'center', color: '#ffffff', top: 6},
+  loginText: {
+    textAlign: 'center',
+    color: '#ffffff',
+    top: 6,
+  },
   forgotText: {
     textAlign: 'right',
     right: 20,
@@ -149,7 +127,7 @@ const styles = StyleSheet.create({
     height: 70,
     padding: 10,
   },
-  sigupView: {
+  signupView: {
     marginTop: 6,
     flexDirection: 'row',
     alignItems: 'center',

@@ -5,17 +5,12 @@ import { ListItem } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 // @ts-ignore
 import Avatar1 from "../../assets/avatar1.jpg"
-import { signOut } from 'firebase/auth';
-import { auth } from '../../config/firebase';
 
 interface IProps {}
 
 export const profileSetting: React.FC<IProps> = () => {
   const navigation = useNavigation();
 
-  const onSignOut = () => {
-    signOut(auth).catch(error => console.log('Error logging out: ', error));
-  };
 
   const data = [
     {
@@ -28,7 +23,7 @@ export const profileSetting: React.FC<IProps> = () => {
 
     {
       title: 'Log out',
-      onPress: () => onSignOut(),
+      onPress: () => {},
      
     },
   ];
